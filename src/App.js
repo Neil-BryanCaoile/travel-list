@@ -10,10 +10,14 @@ const initialItems = [
 export default function App() {
   const [items, setItems] = useState([]);
 
+  function handleAddItems(item) {
+    setItems((items) => [...items, item]);
+  }
+
   return (
     <div className="app">
       <Logo />
-      <Form items={items} setItems={setItems} />
+      <Form onAddItems={handleAddItems} />
       <PackingList items={items} />
       <Stats />
     </div>
@@ -28,14 +32,11 @@ function Logo() {
 // Form that will let you add a list
 // * Quantity - select
 // * Item Name - text input box
-function Form({ items, setItems }) {
+function Form({ onAddItems }) {
   // state that will be use to change
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(5);
 
-  function handleAddItems(item) {
-    setItems((items) => [...items, item]);
-  }
   //This is a handle function that prevent reloading the browser when enter
   //Used in forms
   function handleSubmit(e) {
@@ -46,7 +47,7 @@ function Form({ items, setItems }) {
     //Creating new object and storing the current values of the inputs
     const newItem = { description, quantity, packed: false, id: Date.now() };
 
-    handleAddItems(newItem);
+    onAddItems(newItem);
 
     setDescription("");
     setQuantity(1);
