@@ -47,7 +47,7 @@ h1 {
 
 .add-form {
   background-color: #cc5de8;
-  padding: 2.8rem 0;
+  padding: 2.8rem 1rem;
   color: #f8f0fc;
   /* display: flex; */
   text-align: center;
@@ -153,7 +153,7 @@ input[type="checkbox"] {
 
 @media (max-width: 587px) {
   html {
-    font-size: 40%;
+    font-size: 50%;
   }
   h1 {
     font-size: 4.4rem;
