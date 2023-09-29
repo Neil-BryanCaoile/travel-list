@@ -150,3 +150,23 @@ input[type="checkbox"] {
 .numItems {
   color: #94d82d;
 }
+
+@media (max-width: 587px) {
+  html {
+    font-size: 40%;
+  }
+  h1 {
+    font-size: 4.4rem;
+  }
+  .list li {
+    gap: 1.2rem;
+    display: grid;
+    grid-template-columns: 10% 70.1% 16%;
+  }
+
+  button,
+  select,
+  input {
+    width: 100%;
+  }
+}

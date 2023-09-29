@@ -55,10 +55,7 @@ function Form({ onAddItems }) {
     //If no description return nothing
     if (!description) return;
     //Creating new object and storing the current values of the inputs
-    const newItem = { description, quantity, packed: false, id: Date.now() };
-
-    onAddItems(newItem);
-
+    onAddItems({ description, quantity, packed: false, id: Date.now() });
     setDescription("");
     setQuantity(1);
   }
@@ -109,7 +106,32 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
     </div>
   );
 }
+function Stats({ items }) {
+  if (!items.length)
+    return (
+      <p className="stats">
+        <em>Start adding some items to your packing list</em>
+      </p>
+    );
+  const numItems = items.length;
+  const numPacked = items.filter((item) => item.packed).length;
+  const percentage = Math.round((numPacked / numItems) * 100);
 
+  return (
+    <footer className="stats">
+      <em>
+        Total Items :
+        <b className={numItems > 0 ? "numItems" : ""}>{numItems}</b> <br />
+        Total Packed:
+        <b className={numPacked > 0 ? "numItems" : ""}>{numPacked}</b>
+        <br />
+        <b className={percentage > 0 ? "numItems" : ""}>{percentage}</b>% <br />
+      </em>
+    </footer>
+  );
+}
+
+// Child Components
 function Item({ item, onDeleteItem, onToggleItem }) {
   return (
     <li>
@@ -123,17 +145,5 @@ function Item({ item, onDeleteItem, onToggleItem }) {
       </span>
       <button onClick={() => onDeleteItem(item.id)}>❌</button>
     </li>
-  );
-}
-
-function Stats({ items }) {
-  const numItems = items.length;
-  return (
-    <footer className="stats">
-      <em>
-        You have <b className={numItems > 0 ? "numItems" : ""}>{numItems}</b>{" "}
-        items on your list, and you already packed X (X%)
-      </em>
-    </footer>
   );
 }
