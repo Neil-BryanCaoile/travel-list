@@ -1,51 +1,91 @@
+import { useState } from "react";
+
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: false },
   { id: 2, description: "Socks", quantity: 12, packed: true },
   { id: 3, description: "Socks", quantity: 12, packed: false },
 ];
 
+// The main App, that will be use in index.js
 export default function App() {
+  const [items, setItems] = useState([]);
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form items={items} setItems={setItems} />
+      <PackingList items={items} />
       <Stats />
     </div>
   );
 }
 
+// Header
 function Logo() {
   return <h1>WanderList</h1>;
 }
 
-function Form() {
+// Form that will let you add a list
+// * Quantity - select
+// * Item Name - text input box
+function Form({ items, setItems }) {
+  // state that will be use to change
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState(5);
+
+  function handleAddItems(item) {
+    setItems((items) => [...items, item]);
+  }
+  //This is a handle function that prevent reloading the browser when enter
+  //Used in forms
   function handleSubmit(e) {
-    e.preventDefault(); //No reload when submit
+    e.preventDefault();
+
+    //If no description return nothing
+    if (!description) return;
+    //Creating new object and storing the current values of the inputs
+    const newItem = { description, quantity, packed: false, id: Date.now() };
+
+    handleAddItems(newItem);
+
+    setDescription("");
+    setQuantity(1);
   }
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your trip?</h3>
-      <select>
-        {/* Created an array of 20 then map it out and return an opttion */}
+      {/* e.target.value will always return a string -> need numbers  */}
+      <select
+        value={quantity}
+        onChange={(e) => setQuantity(Number(e.target.value))}
+      >
+        {/* Array.from({ length: 20 }, (_, i) => i + 1) -> Creating an array of 20 digits -> map the array storing the value to num -> use num to create 20 options*/}
         {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
           <option value={num} key={num}>
-            {" "}
             {num}
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Item..." />
+
+      {/* This is the input where you can add item */}
+      <input
+        type="text"
+        placeholder="Item..."
+        value={description}
+        //Listening an event t
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <button>Add</button>
     </form>
   );
 }
-function PackingList() {
+
+function PackingList({ items }) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((item) => (
+        {items.map((item) => (
           <Item item={item} key={item.id} />
         ))}
       </ul>
