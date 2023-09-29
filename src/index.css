@@ -56,7 +56,7 @@ h1 {
 button,
 select,
 input {
-  background-color: #f3f0ff;
+  background-color: #f3d9fa;
   /* color: #5a3e2b; */
   color: #862e9c;
   font-family: inherit;
@@ -169,4 +169,7 @@ input[type="checkbox"] {
   input {
     width: 100%;
   }
+}
+.btn-clear:hover {
+  background-color: #eebefa;
 }
