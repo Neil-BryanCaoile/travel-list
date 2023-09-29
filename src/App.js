@@ -20,8 +20,12 @@ function Logo() {
 }
 
 function Form() {
+  function handleSubmit(e) {
+    e.preventDefault(); //No reload when submit
+  }
+
   return (
-    <form className="add-form">
+    <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for your trip?</h3>
       <select>
         {/* Created an array of 20 then map it out and return an opttion */}
